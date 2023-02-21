@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "bidding-system-376415": {
+      "hosting": {
+        "bidding-system": [
+          "bidding-system-376415"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "bidding-system-376415"
+  }
+}

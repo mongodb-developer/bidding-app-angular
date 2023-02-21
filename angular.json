@@ -97,6 +97,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "bidding-system:build:production",
+            "firebaseProject": "bidding-system-376415",
+            "firebaseHostingSite": "bidding-system-376415"
+          }
         }
       }
     }

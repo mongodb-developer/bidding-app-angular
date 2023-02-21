@@ -1,0 +1,10 @@
+
+<h1>Active auctions</h1>
+
+<ol>
+    <li *ngFor="let auction of auctions">
+        {{auction.name}} — ${{auction.currentBid}}
+        <a [routerLink]="'/auction/' + auction._id">Go to auction</a>
+    </li>
+</ol>
+
