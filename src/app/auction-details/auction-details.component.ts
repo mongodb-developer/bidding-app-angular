@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuctionService } from '../auction.service';
 import { DocumentUpdate } from '../helpers/documentUpdate';
 import { compareIds } from '../helpers/objectId';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-auction-details',
@@ -15,7 +16,11 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
   private currentId: any;
   auction: any;
 
-  constructor(private route: ActivatedRoute, private auctionService: AuctionService) {
+  constructor(
+    private route: ActivatedRoute,
+    private auctionService: AuctionService,
+    private userService: UserService,
+  ) {
     this.route.paramMap.subscribe({
       next: async params => {
         this.currentId = params.get('id');
@@ -45,7 +50,7 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
   }
 
   bid() {
-    this.auctionService.bid(this.auction);
+    this.auctionService.bid(this.auction, this.userService.username);
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {

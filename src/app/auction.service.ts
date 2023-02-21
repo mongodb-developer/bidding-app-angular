@@ -33,7 +33,7 @@ export class AuctionService {
     ]);
   }
 
-  async getCollectionWatcher(ids: string[]) {
+  async getCollectionWatcher(ids: any[]) {
     if (!ids.length) {
       return;
     }
@@ -49,13 +49,15 @@ export class AuctionService {
     return fromChangeEvent(generator).pipe(extractUpdate);
   }
 
-  async bid(auction: Auction, increment: number = 1) {
+  async bid(auction: Auction, username: string, increment: number = 1) {
     const collection = await this.getCollection();
     await collection?.findOneAndUpdate({
       _id: auction._id,
       currentBid: auction.currentBid,
+      currentBidder: auction.currentBidder
     }, {
       $inc: { currentBid: increment },
+      $set: { currentBidder: username }
     }, {
       returnNewDocument: true
     });

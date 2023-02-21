@@ -1,18 +1,23 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import * as Realm from 'realm-web';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuctionCatalogueComponent } from './auction-catalogue/auction-catalogue.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
+import { LoginComponent } from './login/login.component';
+import { RealmAppService } from './realm-app.service';
+import { UserService } from './user.service';
+import { getRandomUsername } from './usernames';
+import { NavbarComponent } from './navbar/navbar.component';
 
-function initializeApp(): Promise<any> {
-  return new Promise(async (resolve, reject) => {
+function initializeApp(realmAppService: RealmAppService, userService: UserService) {
+  return () => new Promise(async (resolve, reject) => {
     try {
-      const app = new Realm.App({ id: 'bidding-ormmh' });
-      const credentials = Realm.Credentials.anonymous();
-      await app.logIn(credentials);
+      const app = await realmAppService.getAppInstance();
+      const username = getRandomUsername();
+      userService.username = username;
+      console.log(username);
 
       return resolve(app);
     } catch(err) {
@@ -27,6 +32,8 @@ function initializeApp(): Promise<any> {
     AppComponent,
     AuctionCatalogueComponent,
     AuctionDetailsComponent,
+    LoginComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +41,8 @@ function initializeApp(): Promise<any> {
   ],
   providers: [{
     provide: APP_INITIALIZER,
-    useFactory: () => initializeApp,
+    deps: [RealmAppService, UserService],
+    useFactory: initializeApp,
     multi: true
    }],
   bootstrap: [AppComponent]
