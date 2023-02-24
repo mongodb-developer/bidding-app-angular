@@ -1,12 +1,21 @@
+<h1 class="center">Active auctions</h1>
 
-<h1>Active auctions</h1>
-
-<ol>
-    <li *ngFor="let auction of auctions">
-        <h3>{{auction.name}}</h3>
-        <p>Bid: ₹{{auction.currentBid}}</p>
-        <p>User: {{auction.currentBidder}}</p>
-        <a [routerLink]="'/auctions/' + auction._id">Go to auction</a>
-    </li>
-</ol>
-
+<div class="auction-card-wrapper">
+    <mat-card class="auction-card" *ngFor="let auction of auctions">
+        <mat-card-header>
+            <mat-card-subtitle>
+                Bidder: {{ auction.currentBidder }}
+            </mat-card-subtitle>
+            <mat-card-title>{{ auction.name }} </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                Current bid: ₹{{ auction.currentBid }}
+            </p>
+            <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-button [routerLink]="'/auctions/' + auction._id">Go to auction</a>
+        </mat-card-actions>
+    </mat-card>
+</div>
