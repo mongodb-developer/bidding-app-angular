@@ -49,8 +49,8 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
     this.observableFromCollectionWatcher.unsubscribe();
   }
 
-  bid() {
-    this.auctionService.bid(this.auction, this.userService.username);
+  bid(increment: number) {
+    this.auctionService.bid(this.auction, this.userService.username, increment);
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {

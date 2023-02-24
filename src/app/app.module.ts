@@ -17,7 +17,6 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
       const app = await realmAppService.getAppInstance();
       const username = getRandomUsername();
       userService.username = username;
-      console.log(username);
 
       return resolve(app);
     } catch(err) {

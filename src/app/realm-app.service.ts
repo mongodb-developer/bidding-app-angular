@@ -13,7 +13,7 @@ export class RealmAppService {
     if (RealmAppService.app) {
       return RealmAppService.app;
     } else {
-      RealmAppService.app = new Realm.App({ id: 'bidding-ormmh' });
+      RealmAppService.app = new Realm.App({ id: 'auctions-wjdls' });
       await this.loginAnonymous(RealmAppService.app);
 
       return RealmAppService.app;

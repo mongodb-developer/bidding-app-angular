@@ -4,7 +4,7 @@
 <ol>
     <li *ngFor="let auction of auctions">
         <h3>{{auction.name}}</h3>
-        <p>Bid: ${{auction.currentBid}}</p>
+        <p>Bid: ₹{{auction.currentBid}}</p>
         <p>User: {{auction.currentBidder}}</p>
         <a [routerLink]="'/auctions/' + auction._id">Go to auction</a>
     </li>

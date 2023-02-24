@@ -44,7 +44,8 @@ export function fromChangeEvent(source: AsyncGenerator<Realm.Services.MongoDB.Ch
     return () => {
       // Stop the collection watcher
       source.return(undefined);
-      subscription?.unsubscribe();
+
+      subscription.unsubscribe();
     };
   });
 }

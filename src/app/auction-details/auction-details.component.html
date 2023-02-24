@@ -1,7 +1,7 @@
 <div *ngIf="auction">
     <h2>{{ auction.name }}</h2>
-    <p>Current bid: ${{ auction.currentBid }}</p>
+    <p>Current bid: ₹{{ auction.currentBid }}</p>
     <p>Bidder: {{ auction.currentBidder }}</p>
 
-    <button (click)="bid()">Bid +$1</button>
+    <button (click)="bid(100)">Bid + ₹100</button>
 </div>

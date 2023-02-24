@@ -3,6 +3,7 @@ import { ObjectId } from './helpers/objectId';
 import { extractUpdate, fromChangeEvent } from './custom-operators';
 import { RealmAppService } from './realm-app.service';
 import { Auction } from './auction';
+import { isInUsernamesList } from './usernames';
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +46,15 @@ export class AuctionService {
 
     const objectIds = ids.map(id => new ObjectId(id));
 
-    const generator = collection.watch({ objectIds });
+    const generator = collection.watch({ ids: objectIds });
     return fromChangeEvent(generator).pipe(extractUpdate);
   }
 
   async bid(auction: Auction, username: string, increment: number = 1) {
+    if (!isInUsernamesList(username)) {
+      return;
+    }
+
     const collection = await this.getCollection();
     await collection?.findOneAndUpdate({
       _id: auction._id,
@@ -58,15 +63,13 @@ export class AuctionService {
     }, {
       $inc: { currentBid: increment },
       $set: { currentBidder: username }
-    }, {
-      returnNewDocument: true
     });
   }
 
   private async getCollection() {
     const app = await this.realmAppService.getAppInstance();
     const mongo = app.currentUser?.mongoClient('mongodb-atlas');
-    const collection = mongo?.db('bidding').collection<Auction>('auctions');
+    const collection = mongo?.db('auctions').collection<Auction>('items');
 
     return collection;
   }
