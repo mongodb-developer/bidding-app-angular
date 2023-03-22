@@ -36,3 +36,29 @@ body {
     object-fit: cover;
     margin: 10px 0;
 }
+
+.pulsing {
+    animation-iteration-count: 1;
+    animation: pulse 0.5s;
+    animation-direction: alternate;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        background-color: transparent;
+        color: black
+    }
+
+    50% {
+        opacity: 0.3;
+        background-color: green;
+        color: white;
+    }
+
+    100% {
+        opacity: 1;
+        background-color: transparent;
+        color: black;
+    }
+}

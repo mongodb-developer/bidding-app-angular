@@ -12,6 +12,7 @@ import { DocumentUpdate } from '../helpers/documentUpdate';
 export class AuctionCatalogueComponent implements OnInit, OnDestroy {
   private observableFromCollectionWatcher: any = new Observable();
   auctions: any[] = [];
+  pulsingText: any[] = [];
 
   constructor(private auctionService: AuctionService) {
   }
@@ -37,12 +38,21 @@ export class AuctionCatalogueComponent implements OnInit, OnDestroy {
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {
-    const existingItem = this.auctions.find(a => compareIds(a._id, updatedItem._id));
+    const existingItemIndex = this.auctions.findIndex(a => compareIds(a._id, updatedItem._id));
+    const existingItem = this.auctions[existingItemIndex];
 
     const updatedFields = updatedItem.updateDescription?.updatedFields || [];
     for (let field of Object.keys(updatedFields)) {
       const value = updatedFields[field];
       existingItem[field] = value;
+
+      this.animateCurrentBid(field, existingItemIndex);
     }
+  }
+
+  private animateCurrentBid(field: string, index: number) {
+      if (field === 'currentBid') {
+        this.pulsingText[index] = { pulsing: true };
+      }
   }
 }

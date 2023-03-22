@@ -1,7 +1,7 @@
 <h1 class="center">Active auctions</h1>
 
 <div class="auction-card-wrapper">
-    <mat-card class="auction-card" *ngFor="let auction of auctions">
+    <mat-card class="auction-card" *ngFor="let auction of auctions; index as i">
         <mat-card-header>
             <mat-card-subtitle>
                 Bidder: {{ auction.currentBidder }}
@@ -11,7 +11,11 @@
         <img class="cropped" height="150" mat-card-image [src]="auction.imageURL" alt="Auction product image">
         <mat-card-content>
             <p>
-                Current bid: €{{ auction.currentBid }}
+                Current bid:
+                <span [ngClass]="pulsingText[i]"
+                (animationend)="pulsingText[i].pulsing=false">
+                    €{{ auction.currentBid }}
+                </span>
             </p>
             <mat-divider></mat-divider>
         </mat-card-content>

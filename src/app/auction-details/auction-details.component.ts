@@ -9,12 +9,15 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-auction-details',
   templateUrl: './auction-details.component.html',
-  styleUrls: ['./auction-details.component.scss']
+  styleUrls: ['./auction-details.component.scss'],
 })
 export class AuctionDetailsComponent implements OnInit, OnDestroy {
   private observableFromCollectionWatcher: any = new Observable();
   private currentId: any;
   auction: any;
+  pulsingText = {
+    pulsing: false
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -62,6 +65,14 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
     for (let field of Object.keys(updatedFields)) {
       const value = updatedFields[field];
       this.auction[field] = value;
+
+      this.animateCurrentBid(field);
+    }
+  }
+
+  private animateCurrentBid(field: string) {
+    if (field === 'currentBid') {
+      this.pulsingText.pulsing = true;
     }
   }
 }

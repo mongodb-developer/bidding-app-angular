@@ -9,7 +9,10 @@
         <img class="cropped" height="150" mat-card-image [src]="auction.imageURL" alt="Auction product image">
         <mat-card-content>
             <p>
-                Current bid: €{{ auction.currentBid }}
+                Current bid:
+                <span [ngClass]="pulsingText" (animationend)="pulsingText.pulsing=false">
+                    €{{ auction.currentBid }}
+                </span>
             </p>
             <mat-divider></mat-divider>
         </mat-card-content>
