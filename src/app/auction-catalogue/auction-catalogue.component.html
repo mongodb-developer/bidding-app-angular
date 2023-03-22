@@ -8,9 +8,10 @@
             </mat-card-subtitle>
             <mat-card-title>{{ auction.name }} </mat-card-title>
         </mat-card-header>
+        <img class="cropped" height="150" mat-card-image [src]="auction.imageURL" alt="Auction product image">
         <mat-card-content>
             <p>
-                Current bid: ₹{{ auction.currentBid }}
+                Current bid: €{{ auction.currentBid }}
             </p>
             <mat-divider></mat-divider>
         </mat-card-content>

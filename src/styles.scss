@@ -21,7 +21,7 @@ body {
 
 .auction-card {
     width: 300px;
-    margin: 0 10px 30px 0;
+    margin: 0 30px 40px 0;
 }
 
 .auction-card-wrapper {
@@ -30,4 +30,9 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+.cropped {
+    object-fit: cover;
+    margin: 10px 0;
 }
