@@ -6,4 +6,5 @@ export interface Auction {
     imageURL: string;
     currentBid: BSON.Decimal128;
     currentBidder: string;
+    ends: Date;
 }

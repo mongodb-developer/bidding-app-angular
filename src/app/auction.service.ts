@@ -107,6 +107,10 @@ export class AuctionService {
       return;
     }
 
+    if (increment < 1 || increment > 1000) {
+      return;
+    }
+
     const collection = await this.getCollection();
     await collection?.findOneAndUpdate({
       _id: auction._id,

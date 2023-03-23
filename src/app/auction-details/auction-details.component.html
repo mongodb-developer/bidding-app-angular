@@ -9,7 +9,10 @@
         <img class="cropped" height="150" mat-card-image [src]="auction.imageURL" alt="Auction product image">
         <mat-card-content>
             <p>
-                Current bid:
+                <app-count-down [endDate]="auction.ends"></app-count-down>
+            </p>
+            <p>
+                <span class="text-label">Current bid:</span>
                 <span [ngClass]="pulsingText" (animationend)="pulsingText.pulsing=false">
                     €{{ auction.currentBid }}
                 </span>

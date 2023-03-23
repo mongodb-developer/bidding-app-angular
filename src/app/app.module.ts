@@ -15,6 +15,7 @@ import { UserService } from './user.service';
 import { getRandomUsername } from './usernames';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CountDownComponent } from './count-down/count-down.component';
 
 function initializeApp(realmAppService: RealmAppService, userService: UserService) {
   return () => new Promise(async (resolve, reject) => {
@@ -37,6 +38,7 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
     AuctionCatalogueComponent,
     AuctionDetailsComponent,
     NavbarComponent,
+    CountDownComponent,
   ],
   imports: [
     BrowserModule,

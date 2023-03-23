@@ -37,6 +37,10 @@ body {
     margin: 10px 0;
 }
 
+.text-label {
+    font-weight: bold;
+}
+
 .pulsing {
     animation-iteration-count: 1;
     animation: pulse 0.5s;
