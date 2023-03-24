@@ -1,10 +1,10 @@
-import * as Realm from "realm-web";
+import { BSON } from "realm-web";
 
-export const {
-  BSON: { ObjectId },
-} = Realm;
+const ObjectId = BSON.ObjectId;
 
-export function compareIds(a: Uint8Array, b: Uint8Array) {
+export { ObjectId };
+
+export function compareIds(a: any, b: any) {
     const oa = new ObjectId(a);
     const ob = new ObjectId(b);
 

@@ -1,0 +1,11 @@
+<form [formGroup]="searchForm" class="search-autocomplete-form">
+    <mat-form-field>
+        <input matInput formControlName="query" required [matAutocomplete]="autoitem">
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-autocomplete #autoitem="matAutocomplete" (optionSelected)="itemSelected($event)" [displayWith]="displayName">
+            <mat-option *ngFor="let option of itemOptions | async" [value]="option">
+                {{ option.name }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

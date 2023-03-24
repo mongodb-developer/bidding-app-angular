@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AuctionService } from '../auction.service';
 import { compareIds } from '../helpers/objectId';
 import { DocumentUpdate } from '../helpers/documentUpdate';
+import { Auction } from '../auction';
 
 @Component({
   selector: 'app-auction-catalogue',
@@ -11,7 +12,7 @@ import { DocumentUpdate } from '../helpers/documentUpdate';
 })
 export class AuctionCatalogueComponent implements OnInit, OnDestroy {
   private observableFromCollectionWatcher: any = new Observable();
-  auctions: any[] = [];
+  auctions: Auction[] = [];
   pulsingText: any[] = [];
 
   constructor(private auctionService: AuctionService) {
@@ -44,7 +45,7 @@ export class AuctionCatalogueComponent implements OnInit, OnDestroy {
     const updatedFields = updatedItem.updateDescription?.updatedFields || [];
     for (let field of Object.keys(updatedFields)) {
       const value = updatedFields[field];
-      existingItem[field] = value;
+      (existingItem as any)[field] = value;
 
       this.animateCurrentBid(field, existingItemIndex);
     }

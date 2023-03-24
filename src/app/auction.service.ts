@@ -4,7 +4,12 @@ import { extractUpdate, fromChangeEvent } from './custom-operators';
 import { RealmAppService } from './realm-app.service';
 import { Auction } from './auction';
 import { isInUsernamesList } from './usernames';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
+
+
+const isUpdateEvent = (event: any): event is Realm.Services.MongoDB.UpdateEvent<any> =>
+event.operationType === 'update';
+
 
 // @Injectable({
 //   providedIn: 'root'
@@ -74,6 +79,31 @@ export class AuctionService {
     return collection.findOne({ _id: new ObjectId(id)});
   }
 
+  async search(query: string) {
+    const collection = await this.getCollection();
+
+    return collection?.aggregate([
+      {
+        $search: {
+          index: "auctions",
+          autocomplete: {
+            path: "name",
+            query,
+          }
+        }
+      },
+      {
+        $limit: 5
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+        }
+      }
+    ]) as Promise<Auction[]>;
+  }
+
   async load(limit = 10) {
     const collection = await this.getCollection();
     if (!collection) {
@@ -81,9 +111,10 @@ export class AuctionService {
       return [];
     }
 
-    return collection?.aggregate([
-      { $limit: limit }
-    ]);
+    return collection.aggregate([
+      { $limit: limit },
+      { $sort: { ends: 1 } }
+    ]) as Promise<Auction[]>;
   }
 
   async getCollectionWatcher(ids: any[]) {
