@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ObjectId } from './helpers/objectId';
-import { extractUpdate, fromChangeEvent } from './custom-operators';
+import { fromChangeEvent } from './custom-operators';
 import { RealmAppService } from './realm-app.service';
 import { Auction } from './auction';
 import { isInUsernamesList } from './usernames';
-import { from, of } from 'rxjs';
-
+import { filter, map } from 'rxjs/operators';
 
 const isUpdateEvent = (event: any): event is Realm.Services.MongoDB.UpdateEvent<any> =>
 event.operationType === 'update';
-
 
 // @Injectable({
 //   providedIn: 'root'
@@ -59,9 +57,6 @@ event.operationType === 'update';
 // }
 
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -85,9 +80,9 @@ export class AuctionService {
     return collection?.aggregate([
       {
         $search: {
-          index: "auctions",
+          index: 'auctions_search',
           autocomplete: {
-            path: "name",
+            path: 'name',
             query,
           }
         }
@@ -130,7 +125,10 @@ export class AuctionService {
     const objectIds = ids.map(id => new ObjectId(id));
 
     const generator = collection.watch({ ids: objectIds });
-    return fromChangeEvent(generator).pipe(extractUpdate);
+    return fromChangeEvent(generator).pipe(
+      filter(isUpdateEvent),
+      map(event => ({ updateDescription: event.updateDescription, _id: event.documentKey._id }))
+    );
   }
 
   async bid(auction: Auction, username: string, increment: number = 1) {
@@ -156,7 +154,7 @@ export class AuctionService {
   private async getCollection() {
     const app = await this.realmAppService.getAppInstance();
     const mongo = app.currentUser?.mongoClient('mongodb-atlas');
-    const collection = mongo?.db('auctions').collection<Auction>('items');
+    const collection = mongo?.db('auctions').collection<Auction>('cars');
 
     return collection;
   }

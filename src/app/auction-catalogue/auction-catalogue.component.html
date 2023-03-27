@@ -6,9 +6,9 @@
             <mat-card-subtitle>
                 Bidder: {{ auction.currentBidder }}
             </mat-card-subtitle>
-            <mat-card-title>{{ auction.name }} </mat-card-title>
+            <mat-card-title><a [routerLink]="'/auctions/' + auction._id">{{ auction.name }}</a></mat-card-title>
         </mat-card-header>
-        <img class="cropped" height="150" mat-card-image [src]="auction.imageURL" alt="Auction product image">
+            <img [routerLink]="'/auctions/' + auction._id" class="img-link cropped" height="150" mat-card-image [src]="auction.imageURL" [alt]="auction.name">
         <mat-card-content>
             <p>
                 <app-count-down [endDate]="auction.ends"></app-count-down>
