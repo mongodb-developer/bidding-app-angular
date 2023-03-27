@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
 })
 export class AuctionDetailsComponent implements OnInit, OnDestroy {
   private observableFromCollectionWatcher: any = new Observable();
-  private currentId: any;
+  private currentId: string = '';
   auction: any;
   pulsingText = {
     pulsing: false
@@ -24,17 +24,35 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
     private auctionService: AuctionService,
     private userService: UserService,
   ) {
+  }
+
+  async ngOnInit() {
     this.route.paramMap.subscribe({
       next: async params => {
-        this.currentId = params.get('id');
+        const id = params.get('id');
+        if (!id) {
+          return;
+        }
+
+        this.currentId = params.get('id')!;
         const item = await this.auctionService.findOne(this.currentId);
         this.auction = item;
+
+        this.startBiddingWatcher(this.currentId);
       }
     });
   }
 
-  async ngOnInit() {
-    const watcher = await this.auctionService.getCollectionWatcher([this.currentId]);
+  ngOnDestroy(): void {
+    this.observableFromCollectionWatcher.unsubscribe();
+  }
+
+  bid(increment: number) {
+    this.auctionService.bid(this.auction, this.userService.username, increment);
+  }
+
+  private async startBiddingWatcher(id: string) {
+    const watcher = await this.auctionService.getCollectionWatcher([id]);
 
     if (!watcher) {
       return;
@@ -44,16 +62,7 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
       next: update => {
         this.updateAuction(update);
       }
-    })
-    
-  }
-
-  ngOnDestroy(): void {
-    this.observableFromCollectionWatcher.unsubscribe();
-  }
-
-  bid(increment: number) {
-    this.auctionService.bid(this.auction, this.userService.username, increment);
+    });
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {
