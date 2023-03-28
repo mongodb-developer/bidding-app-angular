@@ -1,29 +1,4 @@
 import { from, Observable } from 'rxjs';
-import { DocumentUpdate } from './helpers/documentUpdate';
-
-export function extractUpdate(source: Observable<any>) {
-  return new Observable<DocumentUpdate<any>>((subscriber) => {
-    const subscription = source.subscribe({
-      next: (value: Realm.Services.MongoDB.ChangeEvent<any>) => {
-        if (value?.operationType === 'update') {
-          const _id = value.documentKey?._id;
-          const updateDescription = value.updateDescription || {};
-          subscriber.next({ _id, updateDescription });
-        }
-      },
-      error: (e) => {
-        subscriber.error(e);
-      },
-      complete: () => {
-        subscriber.complete();
-      },
-    });
-
-    return () => {
-      subscription?.unsubscribe();
-    };
-  });
-}
 
 export function fromChangeEvent(source: AsyncGenerator<Realm.Services.MongoDB.ChangeEvent<any>>)
   : Observable<Realm.Services.MongoDB.ChangeEvent<any>> {
@@ -43,7 +18,7 @@ export function fromChangeEvent(source: AsyncGenerator<Realm.Services.MongoDB.Ch
 
     return () => {
       // Stop the collection watcher
-      // source.return(undefined);
+      source.return(undefined);
 
       subscription.unsubscribe();
     };
