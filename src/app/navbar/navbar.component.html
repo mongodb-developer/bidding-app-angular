@@ -1,8 +1,34 @@
-<mat-toolbar>
-    <a routerLink="/"><mat-icon>home</mat-icon></a>
-    <a routerLink="/">Welcome, {{ username }}!</a>
+<mat-toolbar class="main-header" [class.hidden]="toggleSearch">
+    <mat-toolbar-row style="padding: 0 5px;">
+        <a routerLink="/"><mat-icon>home</mat-icon></a>
+        <a routerLink="/">Welcome, {{ username }}!</a>
 
-    <span class="spacer"></span>
+        <span class="spacer"></span>
 
-    <app-search></app-search>
+        <button mat-icon-button (click)="openSearch()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-toolbar class="search-block" [class.active]="toggleSearch">
+    <mat-toolbar-row style="padding: 0 5px;">
+        <form [formGroup]="searchForm" class="search-autocomplete-form">
+            <button mat-icon-button class="search-icon" disabled>
+                <mat-icon>search</mat-icon>
+            </button>
+            <input placeholder="Search" matInput #searchbar class="search-control" formControlName="query" required
+                [matAutocomplete]="autoitem">
+            <mat-autocomplete #autoitem="matAutocomplete" (optionSelected)="itemSelected($event)"
+                [displayWith]="displayName">
+                <mat-option *ngFor="let option of itemOptions | async" [value]="option">
+                    {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+
+            <button mat-icon-button (click)="searchClose()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </form>
+    </mat-toolbar-row>
 </mat-toolbar>

@@ -1,5 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -19,8 +20,6 @@ import { getRandomUsername } from './usernames';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CountDownComponent } from './count-down/count-down.component';
-import { SearchComponent } from './search/search.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 function initializeApp(realmAppService: RealmAppService, userService: UserService) {
   return () => new Promise(async (resolve, reject) => {
@@ -44,7 +43,6 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
     AuctionDetailsComponent,
     NavbarComponent,
     CountDownComponent,
-    SearchComponent,
   ],
   imports: [
     AppRoutingModule,
