@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuctionService } from '../auction.service';
 import { DocumentUpdate } from '../helpers/documentUpdate';
 import { compareIds } from '../helpers/objectId';
@@ -12,7 +12,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./auction-details.component.scss'],
 })
 export class AuctionDetailsComponent implements OnInit, OnDestroy {
-  private observableFromCollectionWatcher: any = new Observable();
+  private bidUpdatesStream: Subscription;
   private currentId: string = '';
   auction: any;
   pulsingText = {
@@ -44,7 +44,7 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.observableFromCollectionWatcher.unsubscribe();
+    this.destroySubscriptions();
   }
 
   bid(increment: number) {
@@ -52,17 +52,25 @@ export class AuctionDetailsComponent implements OnInit, OnDestroy {
   }
 
   private async startBiddingWatcher(id: string) {
+    this.destroySubscriptions();
+
     const watcher = await this.auctionService.getCollectionWatcher([id]);
 
     if (!watcher) {
       return;
     }
 
-    this.observableFromCollectionWatcher = watcher.subscribe({
+    this.bidUpdatesStream = watcher.subscribe({
       next: update => {
         this.updateAuction(update);
       }
     });
+  }
+
+  private destroySubscriptions() {
+    if (this.bidUpdatesStream) {
+      this.bidUpdatesStream.unsubscribe();
+    }
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {
