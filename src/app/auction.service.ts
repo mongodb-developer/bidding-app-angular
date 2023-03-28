@@ -99,7 +99,7 @@ export class AuctionService {
     ]) as Promise<Auction[]>;
   }
 
-  async load(limit = 10) {
+  async load(limit = 20) {
     const collection = await this.getCollection();
     if (!collection) {
       console.error('Failed to load collection.');
