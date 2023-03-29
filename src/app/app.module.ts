@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage, provideImgixLoader } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -61,12 +61,15 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
     MatToolbarModule,
     MatFormFieldModule,
   ],
-  providers: [{
-    provide: APP_INITIALIZER,
-    deps: [RealmAppService, UserService],
-    useFactory: initializeApp,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      deps: [RealmAppService, UserService],
+      useFactory: initializeApp,
+      multi: true
+    },
+    provideImgixLoader("https://bidding-system.imgix.net/"),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
