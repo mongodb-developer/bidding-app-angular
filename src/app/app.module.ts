@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgOptimizedImage, provideImgixLoader } from '@angular/common';
@@ -15,27 +15,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuctionCatalogueComponent } from './auction-catalogue/auction-catalogue.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
-import { RealmAppService } from './realm-app.service';
-import { UserService } from './user.service';
-import { getRandomUsername } from './usernames';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CountDownComponent } from './count-down/count-down.component';
-
-function initializeApp(realmAppService: RealmAppService, userService: UserService) {
-  return () => new Promise(async (resolve, reject) => {
-    try {
-      const app = await realmAppService.getAppInstance();
-      const username = getRandomUsername();
-      userService.username = username;
-
-      return resolve(app);
-    } catch (err) {
-      console.error(err);
-      return reject(err);
-    }
-  });
-}
 
 @NgModule({
   declarations: [
@@ -62,12 +44,6 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
     MatFormFieldModule,
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      deps: [RealmAppService, UserService],
-      useFactory: initializeApp,
-      multi: true
-    },
     provideImgixLoader("https://bidding-system.imgix.net/"),
   ],
   bootstrap: [AppComponent]

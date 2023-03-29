@@ -27,8 +27,11 @@
             </p>
             <mat-divider></mat-divider>
         </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="accent" (click)="bid(100)">Bid €100</button>
+        <mat-card-actions class="bid-actions">
+            <span class="text-label">Bid: </span>
+            <button mat-raised-button color="primary" (click)="bid(10)">+ €10</button>
+            <button mat-raised-button color="primary" (click)="bid(50)">+ €50</button>
+            <button mat-raised-button color="primary" (click)="bid(100)">+ €100</button>
         </mat-card-actions>
     </mat-card>
 </div>

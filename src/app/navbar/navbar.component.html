@@ -1,11 +1,11 @@
 <mat-toolbar class="main-header" [class.hidden]="toggleSearch">
     <mat-toolbar-row style="padding: 0 5px;">
-        <a routerLink="/"><mat-icon>home</mat-icon></a>
+        <a routerLink="/" aria-label="Navigate to the home page"><mat-icon>home</mat-icon></a>
         <a routerLink="/">Welcome, {{ username }}!</a>
 
         <span class="spacer"></span>
 
-        <button mat-icon-button (click)="openSearch()">
+        <button mat-icon-button (click)="openSearch()" aria-label="Search">
             <mat-icon>search</mat-icon>
         </button>
     </mat-toolbar-row>
@@ -14,7 +14,7 @@
 <mat-toolbar class="search-block" [class.active]="toggleSearch">
     <mat-toolbar-row style="padding: 0 5px;">
         <form [formGroup]="searchForm" class="search-autocomplete-form">
-            <button mat-icon-button class="search-icon" disabled>
+            <button mat-icon-button class="search-icon" disabled aria-label="Search">
                 <mat-icon>search</mat-icon>
             </button>
             <input placeholder="Search" matInput #searchbar class="search-control" formControlName="query" required
@@ -26,7 +26,7 @@
                 </mat-option>
             </mat-autocomplete>
 
-            <button mat-icon-button (click)="searchClose()">
+            <button mat-icon-button (click)="searchClose()" aria-label="Close">
                 <mat-icon>close</mat-icon>
             </button>
         </form>
