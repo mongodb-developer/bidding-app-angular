@@ -1,14 +1,42 @@
 <h1 class="center">Active auctions</h1>
 
 <div class="auction-card-wrapper">
-    <mat-card class="auction-card" *ngFor="let auction of auctions; index as i">
+    <mat-card class="auction-card" *ngFor="let auction of auctions; index as i, first as isFirst">
         <mat-card-header>
             <mat-card-subtitle>
                 Bidder: {{ auction.currentBidder }}
             </mat-card-subtitle>
             <mat-card-title><a [routerLink]="'/auctions/' + auction._id">{{ auction.name }}</a></mat-card-title>
         </mat-card-header>
-            <img [routerLink]="'/auctions/' + auction._id" class="img-link cropped" height="150" mat-card-image [src]="auction.imageURL" [alt]="auction.name">
+
+        <ng-container *ngIf="isFirst; then firstImage; else subsequentImage">
+        </ng-container>
+
+            <ng-template #firstImage>
+                <img
+                    priority
+                    [routerLink]="'/auctions/' + auction._id"
+                    class="img-link cropped"
+                    width="300"
+                    height="150"
+                    mat-card-image
+                    [ngSrc]="auction.imageURL"
+                    [alt]="auction.name"
+                />
+            </ng-template>
+
+            <ng-template #subsequentImage>
+                <img
+                    [routerLink]="'/auctions/' + auction._id"
+                    class="img-link cropped"
+                    width="300"
+                    height="150"
+                    mat-card-image
+                    [ngSrc]="auction.imageURL"
+                    [alt]="auction.name"
+                >
+            </ng-template>
+
         <mat-card-content>
             <p>
                 <app-count-down [endDate]="auction.ends"></app-count-down>

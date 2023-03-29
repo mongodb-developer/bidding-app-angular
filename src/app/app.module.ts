@@ -1,6 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgOptimizedImage } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -50,6 +51,7 @@ function initializeApp(realmAppService: RealmAppService, userService: UserServic
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgOptimizedImage,
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
