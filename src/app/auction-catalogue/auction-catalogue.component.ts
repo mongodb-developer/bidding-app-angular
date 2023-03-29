@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuctionService } from '../auction.service';
 import { compareIds } from '../helpers/objectId';
 import { DocumentUpdate } from '../helpers/documentUpdate';
@@ -11,7 +11,7 @@ import { Auction } from '../auction';
   styleUrls: ['./auction-catalogue.component.scss']
 })
 export class AuctionCatalogueComponent implements OnInit, OnDestroy {
-  private observableFromCollectionWatcher: any = new Observable();
+  private bidUpdatesSubscription: Subscription;
   auctions: Auction[] = [];
   pulsingText: any[] = [];
 
@@ -27,7 +27,7 @@ export class AuctionCatalogueComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.observableFromCollectionWatcher = watcher.subscribe({
+    this.bidUpdatesSubscription = watcher.subscribe({
       next: (v) => {
         this.updateAuction(v);
       }
@@ -35,7 +35,7 @@ export class AuctionCatalogueComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.observableFromCollectionWatcher.unsubscribe();
+    this.bidUpdatesSubscription?.unsubscribe();
   }
 
   private updateAuction(updatedItem: DocumentUpdate<any>) {

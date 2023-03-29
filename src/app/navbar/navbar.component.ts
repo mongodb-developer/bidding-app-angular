@@ -36,11 +36,11 @@ export class NavbarComponent implements OnInit {
     this.username = this.userService.username;    
   }
 
-
   openSearch() {
     this.toggleSearch = true;
     this.searchBar.nativeElement.focus();
   }
+
   searchClose() {
     this.searchForm.patchValue({
       query: ''
@@ -54,7 +54,10 @@ export class NavbarComponent implements OnInit {
       return;
     }
 
-    this.router.navigate([`/auctions/${item._id}`]);
+    // Workaround for https://github.com/angular/angular/issues/47813
+    this.router.navigate(['/']).then(_ => {
+      this.router.navigate([`/auctions/${item._id}`]);
+    })
 
     this.searchForm.patchValue({
       ...event.option.value,
