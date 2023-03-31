@@ -9,54 +9,6 @@ import { filter, map } from 'rxjs/operators';
 const isUpdateEvent = (event: any): event is Realm.Services.MongoDB.UpdateEvent<any> =>
 event.operationType === 'update';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuctionService {
-//   constructor(private realmAppService: RealmAppService) { }
-
-//   private async getCollection() {
-//     return;
-//   }
-
-//   async load(limit = 10) {
-//     return [{
-//       name: 'Fake data',
-//       currentBid: 20,
-//       currentBidder: 'no one',
-//     }];
-//   }
-
-//   async findOne(id: any) {
-//     return {};
-//   }
-
-//   async getCollectionWatcher(ids: any[]) {
-//     return from([]);
-//   }
-
-//   async bid(
-//     auction: Auction,
-//     username: string,
-//     increment: number = 1
-//   ) {
-//     // if (!isInUsernamesList(username)) {
-//     //   return;
-//     // }
-
-//     // const collection = await this.getCollection();
-//     // await collection?.findOneAndUpdate({
-//     //   _id: auction._id,
-//     //   currentBid: auction.currentBid,
-//     //   currentBidder: auction.currentBidder
-//     // }, {
-//     //   $inc: { currentBid: increment },
-//     //   $set: { currentBidder: username }
-//     // });
-//   }
-// }
-
-
 @Injectable({
   providedIn: 'root'
 })
