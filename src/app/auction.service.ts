@@ -9,7 +9,7 @@ import { from } from 'rxjs';
 import { BSON } from 'realm-web';
 
 const isUpdateEvent = (event: any): event is Realm.Services.MongoDB.UpdateEvent<any> =>
-event.operationType === 'update';
+  event.operationType === 'update';
 
 @Injectable({
   providedIn: 'root'

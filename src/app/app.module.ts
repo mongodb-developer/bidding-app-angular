@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgOptimizedImage, provideImgixLoader } from '@angular/common';
@@ -18,6 +18,9 @@ import { AuctionDetailsComponent } from './auction-details/auction-details.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CountDownComponent } from './count-down/count-down.component';
+import { RealmAppService } from './realm-app.service';
+import { UserService } from './user.service';
+import { initializeApp } from './app-initializer';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,12 @@ import { CountDownComponent } from './count-down/count-down.component';
   ],
   providers: [
     provideImgixLoader("https://bidding-system.imgix.net/"),
+    {
+      provide: APP_INITIALIZER,
+      deps: [RealmAppService, UserService],
+      useFactory: initializeApp,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
