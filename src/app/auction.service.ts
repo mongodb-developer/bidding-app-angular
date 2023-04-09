@@ -7,7 +7,7 @@ import { isInUsernamesList } from './usernames';
 import { filter, map } from 'rxjs/operators';
 
 const isUpdateEvent = (event: any): event is Realm.Services.MongoDB.UpdateEvent<any> =>
-event.operationType === 'update';
+  event.operationType === 'update';
 
 @Injectable({
   providedIn: 'root'
@@ -99,7 +99,7 @@ export class AuctionService {
   private async getCollection() {
     const app = await this.realmAppService.getAppInstance();
     const mongo = app.currentUser?.mongoClient('mongodb-atlas');
-    const collection = mongo?.db('auctions').collection<Auction>('cars');
+    const collection = mongo?.db('auctions').collection<Auction>('spanish_dishes');
 
     return collection;
   }
