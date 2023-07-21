@@ -9,7 +9,7 @@
 
     <ng-template #timeBlock>
         <span class="text-label">Time left: </span>
-        {{ timeRemaining$ | async | date: 'hh:mm:ss': 'GMT' }}
+        {{ timeRemaining$ | async | countDown}}
     </ng-template>
     <ng-template #endedBlock>
         <i>Auction closed</i>

@@ -21,6 +21,7 @@ import { CountDownComponent } from './count-down/count-down.component';
 import { RealmAppService } from './realm-app.service';
 import { UserService } from './user.service';
 import { initializeApp } from './app-initializer';
+import { CountDownPipe } from './count-down.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { initializeApp } from './app-initializer';
     AuctionDetailsComponent,
     NavbarComponent,
     CountDownComponent,
+    CountDownPipe,
   ],
   imports: [
     AppRoutingModule,

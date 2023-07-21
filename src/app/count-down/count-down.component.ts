@@ -16,10 +16,10 @@ export class CountDownComponent implements OnInit {
     const now = new Date().getTime();
 
     const diff = end - now;
-    this.seconds = diff / 1000;
+    this.seconds = Math.floor(diff / 1000);
 
     this.timeRemaining$ = timer(0, 1000).pipe(
-      map(n => (this.seconds - n) * 1000),
+      map(n => this.seconds - n),
       takeWhile(n => n >= 0),
     );
   }
