@@ -99,8 +99,7 @@ export class AuctionService {
   private async getCollection() {
     const app = await this.realmAppService.getAppInstance();
     const mongo = app.currentUser?.mongoClient('mongodb-atlas');
-    const collection = mongo?.db('auctions').collection<Auction>('spanish_dishes');
-
+    const collection = mongo?.db('auctions').collection<Auction>('cars');
     return collection;
   }
 }
