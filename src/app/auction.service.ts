@@ -59,8 +59,8 @@ export class AuctionService {
     }
 
     return collection.aggregate([
+      { $sort: { ends: 1 } },
       { $limit: limit },
-      { $sort: { ends: 1 } }
     ]) as Promise<Auction[]>;
   }
 
