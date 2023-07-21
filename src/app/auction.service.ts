@@ -46,7 +46,7 @@ export class AuctionService {
     // }
 
     // const collection = await this.getCollection();
-    // await collection?.findOneAndUpdate({
+    // await collection?.updateOne({
     //   _id: auction._id,
     //   currentBid: auction.currentBid,
     //   currentBidder: auction.currentBidder
